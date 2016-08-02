@@ -1,0 +1,6 @@
+edu\pdx\cs410J\whitlock\server\AppointmentBookServiceImplTest.class
+edu\pdx\cs410J\whitlock\client\AppointmentBookGwtIT.class
+edu\pdx\cs410J\whitlock\client\AppointmentBookGwtTestSuite.class
+edu\pdx\cs410J\whitlock\client\AppointmentBookGwtIT$CapturingAlerter.class
+edu\pdx\cs410J\whitlock\client\AppointmentBookGwtIT$1.class
+edu\pdx\cs410J\whitlock\AppointmentBookServiceSyncProxyIT.class
