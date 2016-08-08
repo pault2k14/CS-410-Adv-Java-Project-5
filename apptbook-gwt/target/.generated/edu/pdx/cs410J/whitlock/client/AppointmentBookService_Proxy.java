@@ -13,7 +13,7 @@ import com.google.gwt.user.client.rpc.impl.RpcStatsContext;
 
 public class AppointmentBookService_Proxy extends RemoteServiceProxy implements edu.pdx.cs410J.whitlock.client.AppointmentBookServiceAsync {
   private static final String REMOTE_SERVICE_INTERFACE_NAME = "edu.pdx.cs410J.whitlock.client.AppointmentBookService";
-  private static final String SERIALIZATION_POLICY ="DFE0A0F10A6324A71B9277FC1CB40A7C";
+  private static final String SERIALIZATION_POLICY ="E16DBBB26FE3753FC2696B1ACEB4EEFC";
   private static final edu.pdx.cs410J.whitlock.client.AppointmentBookService_TypeSerializer SERIALIZER = new edu.pdx.cs410J.whitlock.client.AppointmentBookService_TypeSerializer();
   
   public AppointmentBookService_Proxy() {

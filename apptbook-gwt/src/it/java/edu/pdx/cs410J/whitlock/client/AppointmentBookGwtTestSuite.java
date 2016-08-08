@@ -1,3 +1,4 @@
+/*
 package edu.pdx.cs410J.whitlock.client;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
@@ -13,3 +14,4 @@ public class AppointmentBookGwtTestSuite {
   }
 
 }
+*/

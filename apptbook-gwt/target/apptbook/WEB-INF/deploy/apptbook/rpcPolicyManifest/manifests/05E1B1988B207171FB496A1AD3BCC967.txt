@@ -1,0 +1,2 @@
+serviceClass: edu.pdx.cs410J.whitlock.client.AppointmentBookService
+path: E16DBBB26FE3753FC2696B1ACEB4EEFC.gwt.rpc

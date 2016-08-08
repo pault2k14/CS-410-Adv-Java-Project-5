@@ -7,17 +7,27 @@ import com.google.gwt.user.client.rpc.impl.ReflectionHelper;
 
 @SuppressWarnings("deprecation")
 public class AppointmentBook_FieldSerializer implements com.google.gwt.user.client.rpc.impl.TypeHandler {
-  private static native java.util.Collection getAppts(edu.pdx.cs410J.whitlock.client.AppointmentBook instance) /*-{
-    return instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::appts;
+  private static native java.util.ArrayList getAppointments(edu.pdx.cs410J.whitlock.client.AppointmentBook instance) /*-{
+    return instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::appointments;
   }-*/;
   
-  private static native void setAppts(edu.pdx.cs410J.whitlock.client.AppointmentBook instance, java.util.Collection value) 
+  private static native void setAppointments(edu.pdx.cs410J.whitlock.client.AppointmentBook instance, java.util.ArrayList value) 
   /*-{
-    instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::appts = value;
+    instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::appointments = value;
+  }-*/;
+  
+  private static native java.lang.String getOwner(edu.pdx.cs410J.whitlock.client.AppointmentBook instance) /*-{
+    return instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::owner;
+  }-*/;
+  
+  private static native void setOwner(edu.pdx.cs410J.whitlock.client.AppointmentBook instance, java.lang.String value) 
+  /*-{
+    instance.@edu.pdx.cs410J.whitlock.client.AppointmentBook::owner = value;
   }-*/;
   
   public static void deserialize(SerializationStreamReader streamReader, edu.pdx.cs410J.whitlock.client.AppointmentBook instance) throws SerializationException {
-    setAppts(instance, (java.util.Collection) streamReader.readObject());
+    setAppointments(instance, (java.util.ArrayList) streamReader.readObject());
+    setOwner(instance, streamReader.readString());
     
     edu.pdx.cs410J.AbstractAppointmentBook_FieldSerializer.deserialize(streamReader, instance);
   }
@@ -27,7 +37,8 @@ public class AppointmentBook_FieldSerializer implements com.google.gwt.user.clie
   }
   
   public static void serialize(SerializationStreamWriter streamWriter, edu.pdx.cs410J.whitlock.client.AppointmentBook instance) throws SerializationException {
-    streamWriter.writeObject(getAppts(instance));
+    streamWriter.writeObject(getAppointments(instance));
+    streamWriter.writeString(getOwner(instance));
     
     edu.pdx.cs410J.AbstractAppointmentBook_FieldSerializer.serialize(streamWriter, instance);
   }

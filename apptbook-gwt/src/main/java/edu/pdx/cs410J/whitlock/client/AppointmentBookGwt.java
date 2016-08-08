@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.whitlock.client;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,7 +16,6 @@ import java.util.Collection;
 public class AppointmentBookGwt implements EntryPoint {
   private final Alerter alerter;
 
-  @VisibleForTesting
   Button button;
   TextBox textBox;
 
@@ -30,7 +28,6 @@ public class AppointmentBookGwt implements EntryPoint {
     });
   }
 
-  @VisibleForTesting
   AppointmentBookGwt(Alerter alerter) {
     this.alerter = alerter;
 
@@ -100,7 +97,6 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(panel);
   }
 
-  @VisibleForTesting
   interface Alerter {
     void alert(String message);
   }

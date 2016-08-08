@@ -5,6 +5,8 @@ edu\pdx\cs410J\whitlock\server\AppointmentBookServiceImpl.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$1.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$3.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookService.class
+edu\pdx\cs410J\whitlock\server\Appointment.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$2.class
+edu\pdx\cs410J\whitlock\server\AppointmentBook.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$Alerter.class

@@ -1,8 +1,9 @@
+/*
 package edu.pdx.cs410J.whitlock;
 
 import com.gdevelop.gwt.syncrpc.SyncProxy;
-import edu.pdx.cs410J.whitlock.client.AppointmentBook;
-import edu.pdx.cs410J.whitlock.client.AppointmentBookService;
+import main.edu.pdx.cs410J.pbt.client.AppointmentBook;
+import main.edu.pdx.cs410J.pbt.client.AppointmentBookService;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.Test;
 
@@ -34,3 +35,4 @@ public class AppointmentBookServiceSyncProxyIT extends HttpRequestHelper {
   }
 
 }
+*/
