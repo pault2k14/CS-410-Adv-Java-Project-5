@@ -11,11 +11,14 @@ import edu.pdx.cs410J.whitlock.client.AppointmentBookService;
 public class AppointmentBookServiceImpl extends RemoteServiceServlet implements AppointmentBookService
 {
   @Override
-  public AppointmentBook createAppointmentBook(int numberOfAppointments) {
-    AppointmentBook book = new AppointmentBook();
-    for (int i = 0; i < numberOfAppointments; i++) {
-      book.addAppointment(new Appointment());
-    }
+  public AppointmentBook createAppointmentBook(String ownerName, String description, String beginTime, String endTime) {
+      // AppointmentBook book = new AppointmentBook();
+      AppointmentBook book = new AppointmentBook(ownerName);
+      Appointment appointment = new Appointment(description, beginTime, endTime);
+      book.addAppointment(appointment);
+    // for (int i = 0; i < numberOfAppointments; i++) {
+     // book.addAppointment(new Appointment());
+    //}
     return book;
   }
 

@@ -18,6 +18,11 @@ public class AppointmentBookGwt implements EntryPoint {
 
   Button button;
   TextBox textBox;
+    TextBox ownerNameBox;
+    TextBox beginTimeBox;
+    TextBox endTimeBox;
+    TextArea descriptionBox;
+
 
   public AppointmentBookGwt() {
     this(new Alerter() {
@@ -44,12 +49,20 @@ public class AppointmentBookGwt implements EntryPoint {
     });
 
     this.textBox = new TextBox();
+      this.ownerNameBox = new TextBox();
+      this.descriptionBox = new TextArea();
+      this.beginTimeBox = new TextBox();
+      this.endTimeBox = new TextBox();
   }
 
   private void createAppointments() {
     AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
     int numberOfAppointments = getNumberOfAppointments();
-    async.createAppointmentBook(numberOfAppointments, new AsyncCallback<AppointmentBook>() {
+      String ownerName = this.ownerNameBox.getText();
+      String description = this.descriptionBox.getText();
+      String beginTime = this.beginTimeBox.getText();
+      String endTime = this.endTimeBox.getText();
+    async.createAppointmentBook(ownerName, description, beginTime, endTime, new AsyncCallback<AppointmentBook>() {
 
       @Override
       public void onSuccess(AppointmentBook airline) {
@@ -68,6 +81,7 @@ public class AppointmentBookGwt implements EntryPoint {
 
     return Integer.parseInt(number);
   }
+
 
   private void displayInAlertDialog(AppointmentBook airline) {
     StringBuilder sb = new StringBuilder(airline.toString());
@@ -93,8 +107,32 @@ public class AppointmentBookGwt implements EntryPoint {
     DockPanel panel = new DockPanel();
     panel.add(new Label("Number of appointments"), DockPanel.WEST);
     panel.add(textBox, DockPanel.CENTER);
+      Label ownerLabel = new Label("Owner name");
+      Label descriptionLabel = new Label("Description");
+      Label beginTimeLabel = new Label("Begin time");
+      Label endTimeLabel = new Label("End time");
+      VerticalPanel verticalPanel = new VerticalPanel();
+      HorizontalPanel horizontalPanelOwner = new HorizontalPanel();
+      HorizontalPanel horizontalPanelDescription = new HorizontalPanel();
+      HorizontalPanel horizontalPanelBeginTime = new HorizontalPanel();
+      HorizontalPanel horizontalPanelEndTime = new HorizontalPanel();
 
-    rootPanel.add(panel);
+      horizontalPanelOwner.add(ownerLabel);
+      horizontalPanelOwner.add(this.ownerNameBox);
+      horizontalPanelDescription.add(descriptionLabel);
+      horizontalPanelDescription.add(this.descriptionBox);
+      horizontalPanelBeginTime.add(beginTimeLabel);
+      horizontalPanelBeginTime.add(this.beginTimeBox);
+      horizontalPanelEndTime.add(endTimeLabel);
+      horizontalPanelEndTime.add(endTimeBox);
+
+      verticalPanel.add(horizontalPanelOwner);
+      verticalPanel.add(horizontalPanelDescription);
+      verticalPanel.add(horizontalPanelBeginTime);
+      verticalPanel.add(horizontalPanelEndTime);
+
+      rootPanel.add(panel);
+      rootPanel.add(verticalPanel);
   }
 
   interface Alerter {

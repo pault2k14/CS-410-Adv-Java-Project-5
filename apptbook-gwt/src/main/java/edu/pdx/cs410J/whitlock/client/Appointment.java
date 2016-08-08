@@ -14,7 +14,9 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     private String description;
 
     public Appointment() {
-
+        this.description = "Stuff";
+        this.beginTime = new Date();
+        this.endTime = new Date();
     }
 
 
@@ -79,7 +81,8 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
         // Attempt to parse the begin date and time to ensure that they
         // are valid dates and times.
         String pattern = "M/d/yy h:mm a";
-        parsedDate = DateTimeFormat.getFormat(pattern).parse(appointmentDateTime);
+        Date newDate = new Date(appointmentDateTime);
+        parsedDate = DateTimeFormat.getShortDateTimeFormat().parse(newDate.toString());
         // parsedDate = shortDateFormat.parse(appointmentDateTime);
 
         if(parsedDate == null) {

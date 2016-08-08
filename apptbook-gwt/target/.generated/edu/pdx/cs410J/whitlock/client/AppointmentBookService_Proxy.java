@@ -23,12 +23,18 @@ public class AppointmentBookService_Proxy extends RemoteServiceProxy implements 
       SERIALIZER);
   }
   
-  public void createAppointmentBook(int numberOfAppointments, com.google.gwt.user.client.rpc.AsyncCallback async) {
+  public void createAppointmentBook(java.lang.String ownerName, java.lang.String description, java.lang.String beginTime, java.lang.String endTime, com.google.gwt.user.client.rpc.AsyncCallback async) {
     com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper helper = new com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper("AppointmentBookService_Proxy", "createAppointmentBook");
     try {
-      SerializationStreamWriter streamWriter = helper.start(REMOTE_SERVICE_INTERFACE_NAME, 1);
-      streamWriter.writeString("I");
-      streamWriter.writeInt(numberOfAppointments);
+      SerializationStreamWriter streamWriter = helper.start(REMOTE_SERVICE_INTERFACE_NAME, 4);
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString(ownerName);
+      streamWriter.writeString(description);
+      streamWriter.writeString(beginTime);
+      streamWriter.writeString(endTime);
       helper.finish(async, ResponseReader.OBJECT);
     } catch (SerializationException ex) {
       async.onFailure(ex);

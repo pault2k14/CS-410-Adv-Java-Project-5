@@ -13,7 +13,8 @@ public class AppointmentBook extends AbstractAppointmentBook
     private ArrayList<Appointment> appointments;
 
     public AppointmentBook() {
-
+        this.owner = "Stuff 123";
+        this.appointments = new ArrayList<>();
     }
 
 
