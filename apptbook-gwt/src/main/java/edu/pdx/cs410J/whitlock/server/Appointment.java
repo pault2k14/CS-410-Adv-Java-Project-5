@@ -18,6 +18,10 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     private Date endTime;
     private String description;
 
+    public Appointment() {
+
+    }
+
     /**
      * This constructor instantiates an appointment object.
      * @param newDescription - The description for the appointment as a string.

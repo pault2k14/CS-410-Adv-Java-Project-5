@@ -6,7 +6,10 @@ edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$1.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$3.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookService.class
 edu\pdx\cs410J\whitlock\server\Appointment.class
+edu\pdx\cs410J\whitlock\server\PrettyPrinter.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt.class
+edu\pdx\cs410J\whitlock\server\TextParser.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$2.class
 edu\pdx\cs410J\whitlock\server\AppointmentBook.class
+edu\pdx\cs410J\whitlock\server\TextDumper.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$Alerter.class

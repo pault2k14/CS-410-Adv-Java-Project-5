@@ -17,6 +17,10 @@ public class AppointmentBook extends AbstractAppointmentBook {
     private String owner;
     private ArrayList<Appointment> appointments;
 
+    public AppointmentBook() {
+
+    }
+
     /**
      * Instantiates a new AppointmentBook object.
      * @param newOwner - The name of the owner of the newly created appointment book.
