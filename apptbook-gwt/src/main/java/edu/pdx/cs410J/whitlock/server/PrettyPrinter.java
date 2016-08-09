@@ -2,6 +2,8 @@ package edu.pdx.cs410J.whitlock.server;
 
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
+import edu.pdx.cs410J.whitlock.client.Appointment;
+import edu.pdx.cs410J.whitlock.client.AppointmentBook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -3,18 +3,18 @@ package edu.pdx.cs410J.whitlock.client;
 import edu.pdx.cs410J.AbstractAppointment;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class AppointmentBook extends AbstractAppointmentBook
+public class AppointmentBook extends AbstractAppointmentBook implements Serializable
 {
     private String owner;
     private ArrayList<Appointment> appointments;
 
     public AppointmentBook() {
-        this.owner = "Stuff 123";
-        this.appointments = new ArrayList<>();
+
     }
 
 

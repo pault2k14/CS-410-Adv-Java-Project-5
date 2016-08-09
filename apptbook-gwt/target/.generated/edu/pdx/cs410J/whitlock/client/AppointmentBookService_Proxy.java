@@ -40,6 +40,34 @@ public class AppointmentBookService_Proxy extends RemoteServiceProxy implements 
       async.onFailure(ex);
     }
   }
+  
+  public void searchAppointmentBook(java.lang.String ownerName, java.lang.String beginTime, java.lang.String endTime, com.google.gwt.user.client.rpc.AsyncCallback async) {
+    com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper helper = new com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper("AppointmentBookService_Proxy", "searchAppointmentBook");
+    try {
+      SerializationStreamWriter streamWriter = helper.start(REMOTE_SERVICE_INTERFACE_NAME, 3);
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString(ownerName);
+      streamWriter.writeString(beginTime);
+      streamWriter.writeString(endTime);
+      helper.finish(async, ResponseReader.OBJECT);
+    } catch (SerializationException ex) {
+      async.onFailure(ex);
+    }
+  }
+  
+  public void viewAppointmentBook(java.lang.String ownerName, com.google.gwt.user.client.rpc.AsyncCallback async) {
+    com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper helper = new com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper("AppointmentBookService_Proxy", "viewAppointmentBook");
+    try {
+      SerializationStreamWriter streamWriter = helper.start(REMOTE_SERVICE_INTERFACE_NAME, 1);
+      streamWriter.writeString("java.lang.String/2004016611");
+      streamWriter.writeString(ownerName);
+      helper.finish(async, ResponseReader.OBJECT);
+    } catch (SerializationException ex) {
+      async.onFailure(ex);
+    }
+  }
   @Override
   public SerializationStreamWriter createStreamWriter() {
     ClientSerializationStreamWriter toReturn =

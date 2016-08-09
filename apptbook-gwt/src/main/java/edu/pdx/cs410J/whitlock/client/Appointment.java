@@ -1,12 +1,14 @@
 package edu.pdx.cs410J.whitlock.client;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.shared.DateTimeFormat;
+import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 import edu.pdx.cs410J.AbstractAppointment;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
-public class Appointment extends AbstractAppointment implements Comparable<Appointment>
+public class Appointment extends AbstractAppointment implements Comparable<Appointment>, Serializable
 {
 
     private Date beginTime;
@@ -14,9 +16,7 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     private String description;
 
     public Appointment() {
-        this.description = "Stuff";
-        this.beginTime = new Date();
-        this.endTime = new Date();
+
     }
 
 
@@ -81,8 +81,13 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
         // Attempt to parse the begin date and time to ensure that they
         // are valid dates and times.
         String pattern = "M/d/yy h:mm a";
-        Date newDate = new Date(appointmentDateTime);
-        parsedDate = DateTimeFormat.getShortDateTimeFormat().parse(newDate.toString());
+        //String pattern = "yyyy/MM/dd hh:mm a";
+        // Date newDate = new Date(appointmentDateTime);
+        // System.out.println("Date is: " + newDate);
+        DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
+        DateTimeFormat dtf = new DateTimeFormat(pattern, info) {};
+        parsedDate = dtf.parse(appointmentDateTime);
+        System.out.println("parsedDate is: " + parsedDate.toString());
         // parsedDate = shortDateFormat.parse(appointmentDateTime);
 
         if(parsedDate == null) {

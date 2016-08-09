@@ -16,12 +16,16 @@ import java.util.Collection;
 public class AppointmentBookGwt implements EntryPoint {
   private final Alerter alerter;
 
-  Button button;
-  TextBox textBox;
-    TextBox ownerNameBox;
-    TextBox beginTimeBox;
-    TextBox endTimeBox;
-    TextArea descriptionBox;
+    HTML resultHTML = null;
+    TextBox textBox = null;
+    TextBox createAppointmentOwnerNameBox = null;
+    TextBox createAppointmentBeginTimeBox = null;
+    TextBox createAppointmentEndTimeBox = null;
+    TextArea createAppointmentDescriptionArea = null;
+    TextBox viewAppointmentsOwnerNameBox = null;
+    TextBox searchAppointmentsOwnerNameBox = null;
+    TextBox searchAppointmentsBeginTimeBox = null;
+    TextBox searchAppointmentsEndTimeBox = null;
 
 
   public AppointmentBookGwt() {
@@ -40,47 +44,111 @@ public class AppointmentBookGwt implements EntryPoint {
   }
 
   private void addWidgets() {
-    button = new Button("Ping Server");
-    button.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent clickEvent) {
-        createAppointments();
-      }
-    });
 
-    this.textBox = new TextBox();
-      this.ownerNameBox = new TextBox();
-      this.descriptionBox = new TextArea();
-      this.beginTimeBox = new TextBox();
-      this.endTimeBox = new TextBox();
   }
 
-  private void createAppointments() {
-    AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
-    int numberOfAppointments = getNumberOfAppointments();
-      String ownerName = this.ownerNameBox.getText();
-      String description = this.descriptionBox.getText();
-      String beginTime = this.beginTimeBox.getText();
-      String endTime = this.endTimeBox.getText();
-    async.createAppointmentBook(ownerName, description, beginTime, endTime, new AsyncCallback<AppointmentBook>() {
 
-      @Override
-      public void onSuccess(AppointmentBook airline) {
-        displayInAlertDialog(airline);
-      }
+    private void createAppointments() {
 
-      @Override
-      public void onFailure(Throwable ex) {
-        alert(ex);
-      }
-    });
-  }
+        AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+        String ownerName = this.createAppointmentOwnerNameBox.getText();
+        String description = this.createAppointmentDescriptionArea.getText();
+        String beginTime = this.createAppointmentBeginTimeBox.getText();
+        String endTime = this.createAppointmentEndTimeBox.getText();
+        async.createAppointmentBook(ownerName, description, beginTime, endTime, new AsyncCallback<Appointment>() {
 
-  private int getNumberOfAppointments() {
-    String number = this.textBox.getText();
+          @Override
+          public void onSuccess(Appointment appointment) {
+              displayCreatedAppointment(appointment);
+          }
 
-    return Integer.parseInt(number);
-  }
+          @Override
+          public void onFailure(Throwable ex) {
+              alert(ex);
+          }
+      });
+    }
+
+    private void searchAllAppointments() {
+
+        AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+        String ownerName = this.searchAppointmentsOwnerNameBox.getText();
+        String beginTime = this.searchAppointmentsBeginTimeBox.getText();
+        String endTime = this.searchAppointmentsEndTimeBox.getText();
+        async.searchAppointmentBook(ownerName, beginTime, endTime, new AsyncCallback<AppointmentBook>() {
+
+            @Override
+            public void onSuccess(AppointmentBook appointmentBook) {
+                displaySearchedAppointments(appointmentBook);
+            }
+
+            @Override
+            public void onFailure(Throwable ex) {
+                alert(ex);
+            }
+        });
+    }
+
+    private void viewAllAppointments() {
+
+        AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+        String ownerName = this.viewAppointmentsOwnerNameBox.getText();
+
+        async.viewAppointmentBook(ownerName, new AsyncCallback<AppointmentBook>() {
+
+            @Override
+            public void onSuccess(AppointmentBook appointmentBook) {
+                displayAllAppointments(appointmentBook);
+            }
+
+            @Override
+            public void onFailure(Throwable ex) {
+                alert(ex);
+            }
+        });
+    }
+
+    private void displayCreatedAppointment(Appointment appointment) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Appointment created!" + "<BR>");
+        sb.append("Owner: " + this.createAppointmentOwnerNameBox.getText() + "<BR>");
+        sb.append("Description: " + appointment.getDescription() + "<BR>");
+        sb.append("Begin time: " + appointment.getBeginTimeString() + "<BR>");
+        sb.append("End time: " + appointment.getEndTimeString() + "<BR>");
+
+        resultHTML.setHTML(sb.toString());
+    }
+
+    private void displaySearchedAppointments(AppointmentBook appointmentBook) {
+
+        StringBuilder sb = new StringBuilder(appointmentBook.toString());
+        sb.append("<BR>");
+
+        Collection<Appointment> appointments = appointmentBook.getAppointments();
+        for (Appointment appt : appointments) {
+            sb.append(appt);
+            sb.append("<BR>");
+        }
+
+        resultHTML.setHTML(sb.toString());
+    }
+
+    private void displayAllAppointments(AppointmentBook appointmentBook) {
+
+        StringBuilder sb = new StringBuilder(appointmentBook.toString());
+        sb.append("<BR>");
+
+        Collection<Appointment> appointments = appointmentBook.getAppointments();
+        for (Appointment appt : appointments) {
+            sb.append(appt);
+            sb.append("<BR>");
+        }
+
+        resultHTML.setHTML(sb.toString());
+    }
+
+
 
 
   private void displayInAlertDialog(AppointmentBook airline) {
@@ -99,40 +167,134 @@ public class AppointmentBookGwt implements EntryPoint {
     alerter.alert(ex.toString());
   }
 
+    public VerticalPanel createAppointmentWidget() {
+
+        Button createApptSubmitButton = new Button("Submit");
+        createApptSubmitButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                createAppointments();
+            }
+        });
+
+        this.createAppointmentOwnerNameBox = new TextBox();
+        this.createAppointmentDescriptionArea = new TextArea();
+        this.createAppointmentBeginTimeBox = new TextBox();
+        this.createAppointmentEndTimeBox = new TextBox();
+
+        Label ownerLabel = new Label("Owner name");
+        Label descriptionLabel = new Label("Description");
+        Label beginTimeLabel = new Label("Begin time");
+        Label endTimeLabel = new Label("End time");
+        VerticalPanel verticalPanel = new VerticalPanel();
+        HorizontalPanel horizontalPanelOwner = new HorizontalPanel();
+        HorizontalPanel horizontalPanelDescription = new HorizontalPanel();
+        HorizontalPanel horizontalPanelBeginTime = new HorizontalPanel();
+        HorizontalPanel horizontalPanelEndTime = new HorizontalPanel();
+
+        horizontalPanelOwner.add(ownerLabel);
+        horizontalPanelOwner.add(this.createAppointmentOwnerNameBox);
+        horizontalPanelDescription.add(descriptionLabel);
+        horizontalPanelDescription.add(this.createAppointmentDescriptionArea);
+        horizontalPanelBeginTime.add(beginTimeLabel);
+        horizontalPanelBeginTime.add(this.createAppointmentBeginTimeBox);
+        horizontalPanelEndTime.add(endTimeLabel);
+        horizontalPanelEndTime.add(this.createAppointmentEndTimeBox);
+
+        verticalPanel.add(horizontalPanelOwner);
+        verticalPanel.add(horizontalPanelDescription);
+        verticalPanel.add(horizontalPanelBeginTime);
+        verticalPanel.add(horizontalPanelEndTime);
+        verticalPanel.add(createApptSubmitButton);
+
+        return verticalPanel;
+    }
+
+    public VerticalPanel searchAllAppointmentsWidget() {
+
+        Button createApptSubmitButton = new Button("Submit");
+        createApptSubmitButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                searchAllAppointments();
+            }
+        });
+
+        this.searchAppointmentsOwnerNameBox = new TextBox();
+        this.searchAppointmentsBeginTimeBox = new TextBox();
+        this.searchAppointmentsEndTimeBox = new TextBox();
+
+        Label ownerLabel = new Label("Owner name");
+        Label beginTimeLabel = new Label("Begin time");
+        Label endTimeLabel = new Label("End time");
+        VerticalPanel verticalPanel = new VerticalPanel();
+        HorizontalPanel horizontalPanelOwner = new HorizontalPanel();
+        HorizontalPanel horizontalPanelBeginTime = new HorizontalPanel();
+        HorizontalPanel horizontalPanelEndTime = new HorizontalPanel();
+
+        horizontalPanelOwner.add(ownerLabel);
+        horizontalPanelOwner.add(this.searchAppointmentsOwnerNameBox);
+        horizontalPanelBeginTime.add(beginTimeLabel);
+        horizontalPanelBeginTime.add(this.searchAppointmentsBeginTimeBox);
+        horizontalPanelEndTime.add(endTimeLabel);
+        horizontalPanelEndTime.add(this.searchAppointmentsEndTimeBox);
+
+        verticalPanel.add(horizontalPanelOwner);
+        verticalPanel.add(horizontalPanelBeginTime);
+        verticalPanel.add(horizontalPanelEndTime);
+        verticalPanel.add(createApptSubmitButton);
+
+        return verticalPanel;
+    }
+
+    private VerticalPanel viewAllAppointmentsWidget() {
+
+        Button viewApptSubmitButton = new Button("Submit");
+        viewApptSubmitButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                viewAllAppointments();
+            }
+        });
+
+        this.viewAppointmentsOwnerNameBox = new TextBox();
+        Label ownerLabel = new Label("Owner name");
+        VerticalPanel verticalPanel = new VerticalPanel();
+        HorizontalPanel horizontalPanelOwner = new HorizontalPanel();
+        horizontalPanelOwner.add(ownerLabel);
+        horizontalPanelOwner.add(this.viewAppointmentsOwnerNameBox);
+
+
+        verticalPanel.add(horizontalPanelOwner);
+        verticalPanel.add(viewApptSubmitButton);
+
+        return verticalPanel;
+    }
+
   @Override
   public void onModuleLoad() {
     RootPanel rootPanel = RootPanel.get();
-    rootPanel.add(button);
 
-    DockPanel panel = new DockPanel();
-    panel.add(new Label("Number of appointments"), DockPanel.WEST);
-    panel.add(textBox, DockPanel.CENTER);
-      Label ownerLabel = new Label("Owner name");
-      Label descriptionLabel = new Label("Description");
-      Label beginTimeLabel = new Label("Begin time");
-      Label endTimeLabel = new Label("End time");
-      VerticalPanel verticalPanel = new VerticalPanel();
-      HorizontalPanel horizontalPanelOwner = new HorizontalPanel();
-      HorizontalPanel horizontalPanelDescription = new HorizontalPanel();
-      HorizontalPanel horizontalPanelBeginTime = new HorizontalPanel();
-      HorizontalPanel horizontalPanelEndTime = new HorizontalPanel();
+      TabPanel tabPanel = new TabPanel();
+      HTML resultHeaderHTML = new HTML("<BR><h3>Latest Result<h3>");
+      resultHTML = new HTML("n/a");
 
-      horizontalPanelOwner.add(ownerLabel);
-      horizontalPanelOwner.add(this.ownerNameBox);
-      horizontalPanelDescription.add(descriptionLabel);
-      horizontalPanelDescription.add(this.descriptionBox);
-      horizontalPanelBeginTime.add(beginTimeLabel);
-      horizontalPanelBeginTime.add(this.beginTimeBox);
-      horizontalPanelEndTime.add(endTimeLabel);
-      horizontalPanelEndTime.add(endTimeBox);
+      String createApptTabTitle = "Create Appointment";
+      String viewAllApptTabTitle = "View All Appointments";
+      String searchAllAppoTabTitle = "Search Appointments";
 
-      verticalPanel.add(horizontalPanelOwner);
-      verticalPanel.add(horizontalPanelDescription);
-      verticalPanel.add(horizontalPanelBeginTime);
-      verticalPanel.add(horizontalPanelEndTime);
+      //create tabs
+      tabPanel.add(createAppointmentWidget(), createApptTabTitle);
+      tabPanel.add(searchAllAppointmentsWidget(), searchAllAppoTabTitle);
+      tabPanel.add(viewAllAppointmentsWidget(), viewAllApptTabTitle);
 
-      rootPanel.add(panel);
-      rootPanel.add(verticalPanel);
+      //select first tab
+      tabPanel.selectTab(0);
+
+      rootPanel.add(tabPanel);
+      rootPanel.add(resultHeaderHTML);
+      rootPanel.add(resultHTML);
+
   }
 
   interface Alerter {
