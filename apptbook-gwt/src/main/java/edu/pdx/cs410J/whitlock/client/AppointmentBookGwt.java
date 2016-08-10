@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -271,11 +272,50 @@ public class AppointmentBookGwt implements EntryPoint {
         return verticalPanel;
     }
 
+    public void showREADME() {
+
+        String readme = "This application allows the user to perform the following tasks: " + '\n'
+                      + "Create a new appointment book, by creating a new appoinntment" + '\n'
+                      + "when there is no appointment book, creating a new appointment," + '\n'
+                      + "viewing all appointments, and searching for appointments of a" + '\n'
+                      + "specific owner and in a specific time range." + '\n'
+                      + "input for text boxes: " + '\n'
+                      + "Owner name  - the name of the owner of the appointment book." + '\n'
+                      + "Description - the description of the appointment." + '\n'
+                      + "Begin Time  - the beginning time of the appointment," + '\n'
+                      + "must be in the format of M(M)/d(d)/yyyy h(h):mm am|pm" + '\n'
+                      + "End Time  - the ending time of the appointment," + '\n'
+                      + "must be in the format of M(M)/d(d)/yyyy h(h):mm am|pm";
+
+
+        alerter.alert(readme);
+    }
+
   @Override
   public void onModuleLoad() {
     RootPanel rootPanel = RootPanel.get();
 
+      // Create a menu bar
+      MenuBar menuBar = new MenuBar();
+      menuBar.setAutoOpen(true);
+      menuBar.setWidth("100px");
+      menuBar.setAnimationEnabled(true);
+
+      // Create help menu
+      MenuBar helpMenu = new MenuBar(true);
+      helpMenu.setAnimationEnabled(true);
+
+      helpMenu.addItem("README", new Command() {
+          @Override
+          public void execute() {
+              showREADME();
+          }
+      });
+
+      menuBar.addItem(new MenuItem("Help", helpMenu));
+
       TabPanel tabPanel = new TabPanel();
+      HTML headerSeperatorHTML = new HTML("<BR>");
       HTML resultHeaderHTML = new HTML("<BR><h3>Latest Result<h3>");
       resultHTML = new HTML("n/a");
 
@@ -291,6 +331,8 @@ public class AppointmentBookGwt implements EntryPoint {
       //select first tab
       tabPanel.selectTab(0);
 
+      rootPanel.add(menuBar);
+      rootPanel.add(headerSeperatorHTML);
       rootPanel.add(tabPanel);
       rootPanel.add(resultHeaderHTML);
       rootPanel.add(resultHTML);

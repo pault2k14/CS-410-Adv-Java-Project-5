@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CS410 Adv Java Project 5.iml" filepath="$PROJECT_DIR$/CS410 Adv Java Project 5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apptbook-gwt/apptbook-gwt.iml" filepath="$PROJECT_DIR$/apptbook-gwt/apptbook-gwt.iml" />
     </modules>
   </component>
 </project>

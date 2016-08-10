@@ -1,4 +1,5 @@
 edu\pdx\cs410J\whitlock\client\AppointmentBook.class
+edu\pdx\cs410J\whitlock\client\AppointmentBookGwt$8.class
 edu\pdx\cs410J\whitlock\client\Appointment.class
 edu\pdx\cs410J\whitlock\client\AppointmentBookServiceAsync.class
 edu\pdx\cs410J\whitlock\server\AppointmentBookServiceImpl.class
