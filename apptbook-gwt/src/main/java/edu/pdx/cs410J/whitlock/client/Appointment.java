@@ -19,7 +19,6 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
 
     }
 
-
         /**
          * This constructor instantiates an appointment object.
          * @param newDescription - The description for the appointment as a string.
@@ -81,13 +80,9 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
         // Attempt to parse the begin date and time to ensure that they
         // are valid dates and times.
         String pattern = "M/d/yy h:mm a";
-        //String pattern = "yyyy/MM/dd hh:mm a";
-        // Date newDate = new Date(appointmentDateTime);
-        // System.out.println("Date is: " + newDate);
         DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
         DateTimeFormat dtf = new DateTimeFormat(pattern, info) {};
         parsedDate = dtf.parse(appointmentDateTime);
-        System.out.println("parsedDate is: " + parsedDate.toString());
         // parsedDate = shortDateFormat.parse(appointmentDateTime);
 
         if(parsedDate == null) {
@@ -141,11 +136,11 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
             // the appointments.
             if(this.endTime.equals(appointment.endTime)) {
 
-                if(this.description.compareTo(appointment.description) == -1) {
+                if(this.description.compareTo(appointment.description) <= -1) {
                     return BEFORE;
                 }
 
-                if(this.description.compareTo(appointment.description) == 1) {
+                if(this.description.compareTo(appointment.description) >= 1) {
                     return AFTER;
                 }
 
@@ -184,26 +179,10 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     @Override
     public String getBeginTimeString() {
 
-        DateTimeFormat shortDateTimeFormat = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT);
+        // Format the begin time and return it as a string.
+        DateTimeFormat shortDateTimeFormat = DateTimeFormat.getFormat("MM/dd/yyyy hh:mm a");
         String stringShortDateTimeFormat = shortDateTimeFormat.format(this.beginTime);
         return stringShortDateTimeFormat;
-
-        // String twelveHourBeginTime = null;
-        // String twelveHourBeginDate = null;
-
-        // Setup Date and time formatters.
-
-        // DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-        // shortDateFormat.setLenient(false);
-
-        // DateFormat shortTimeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
-        // shortTimeFormat.setLenient(false);
-
-        // Format the begin time to something a bit, prettier.
-        // twelveHourBeginDate = shortDateFormat.format(this.beginTime);
-        // twelveHourBeginTime = shortTimeFormat.format(this.beginTime);
-
-        // return twelveHourBeginDate + " " + twelveHourBeginTime;
     }
 
     /**
@@ -214,25 +193,10 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     @Override
     public String getEndTimeString() {
 
-        DateTimeFormat shortDateTimeFormat = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT);
+        // Format the end time and return it as a string.
+        DateTimeFormat shortDateTimeFormat = DateTimeFormat.getFormat("MM/dd/yyyy hh:mm a");
         String stringShortDateTimeFormat = shortDateTimeFormat.format(this.endTime);
         return stringShortDateTimeFormat;
-
-        // String twelveHourEndTime = null;
-        // String twelveHourEndDate = null;
-
-        // Setup Date and time formatters.
-        // DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-        // shortDateFormat.setLenient(false);
-
-        // DateFormat shortTimeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
-        // shortTimeFormat.setLenient(false);
-
-        // Format the end time to something a bit, prettier.
-        // twelveHourEndDate = shortDateFormat.format(this.endTime);
-        // twelveHourEndTime = shortTimeFormat.format(this.endTime);
-
-        // return twelveHourEndDate + " " + twelveHourEndTime;
     }
 
     /**

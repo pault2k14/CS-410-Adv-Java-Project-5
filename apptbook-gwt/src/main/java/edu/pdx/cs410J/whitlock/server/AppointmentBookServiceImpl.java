@@ -21,16 +21,12 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
   @Override
   public Appointment createAppointmentBook(String ownerName, String description, String beginTime, String endTime) {
 
-      System.out.println("In createAppointmentBook owner is " + ownerName);
-
       if(appointmentBook == null) {
           appointmentBook = new AppointmentBook(ownerName);
       }
 
       Appointment appointment = new Appointment(description, beginTime, endTime);
       appointmentBook.addAppointment(appointment);
-
-      System.out.println("In createAppointmentBook Appointment owner is " + this.appointmentBook.getOwnerName());
 
       return appointment;
   }
@@ -39,10 +35,9 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
     public AppointmentBook viewAppointmentBook(String ownerName) {
 
         if(this.appointmentBook == null) {
-            doUnexpectedFailure(new NullPointerException());
+            doUnexpectedFailure(new NullPointerException("No appointment book exists!"));
         }
         else if(!this.appointmentBook.getOwnerName().equals(ownerName)) {
-            System.out.println("Appointment owner is " + this.appointmentBook.getOwnerName());
             return new AppointmentBook(ownerName);
         }
 
@@ -59,7 +54,6 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
             doUnexpectedFailure(new NullPointerException());
         }
         else if(!this.appointmentBook.getOwnerName().equals(ownerName)) {
-            System.out.println("Appointment owner is " + this.appointmentBook.getOwnerName());
             return new AppointmentBook(ownerName);
         }
 

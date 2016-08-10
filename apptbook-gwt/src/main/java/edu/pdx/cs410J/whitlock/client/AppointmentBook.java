@@ -17,7 +17,6 @@ public class AppointmentBook extends AbstractAppointmentBook implements Serializ
 
     }
 
-
         /**
          * Instantiates a new AppointmentBook object.
          * @param newOwner - The name of the owner of the newly created appointment book.

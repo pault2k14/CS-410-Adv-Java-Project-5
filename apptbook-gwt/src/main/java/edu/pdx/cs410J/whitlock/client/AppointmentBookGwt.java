@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A basic GWT class that makes sure that we can send an appointment book back from the server
@@ -17,6 +19,7 @@ import java.util.Collection;
 public class AppointmentBookGwt implements EntryPoint {
   private final Alerter alerter;
 
+    String timeDateFilter = "\\d\\d?/\\d\\d?/\\d\\d\\d\\d \\d\\d?:\\d\\d (am|pm)";
     HTML resultHTML = null;
     TextBox textBox = null;
     TextBox createAppointmentOwnerNameBox = null;
@@ -41,13 +44,8 @@ public class AppointmentBookGwt implements EntryPoint {
   AppointmentBookGwt(Alerter alerter) {
     this.alerter = alerter;
 
-    addWidgets();
-  }
-
-  private void addWidgets() {
 
   }
-
 
     private void createAppointments() {
 
@@ -56,6 +54,29 @@ public class AppointmentBookGwt implements EntryPoint {
         String description = this.createAppointmentDescriptionArea.getText();
         String beginTime = this.createAppointmentBeginTimeBox.getText();
         String endTime = this.createAppointmentEndTimeBox.getText();
+
+        // Validate the fields
+
+        if(ownerName == null || ownerName.length() < 1) {
+            alerter.alert("Owner name field cannot be empty.");
+            return;
+        }
+
+        if(description == null || description.length() < 1) {
+            alerter.alert("Description field cannot be empty.");
+            return;
+        }
+
+        if(!beginTime.matches(timeDateFilter)) {
+            alerter.alert("Begin time field must be in the format of: \n M(M)/d(d)/yyyy h(h):mm am|pm");
+            return;
+        }
+
+        if(!endTime.matches(timeDateFilter)) {
+            alerter.alert("End time field must be in the format of: \n M(M)/d(d)/yyyy h(h):mm am|pm");
+            return;
+        }
+
         async.createAppointmentBook(ownerName, description, beginTime, endTime, new AsyncCallback<Appointment>() {
 
           @Override
@@ -76,11 +97,29 @@ public class AppointmentBookGwt implements EntryPoint {
         String ownerName = this.searchAppointmentsOwnerNameBox.getText();
         String beginTime = this.searchAppointmentsBeginTimeBox.getText();
         String endTime = this.searchAppointmentsEndTimeBox.getText();
+
+        // Validate the fields
+
+        if(ownerName == null || ownerName.length() < 1) {
+            alerter.alert("Owner name field cannot be empty.");
+            return;
+        }
+
+        if(!beginTime.matches(timeDateFilter)) {
+            alerter.alert("Begin time field must be in the format of: \n M(M)/d(d)/yyyy h(h):mm am|pm");
+            return;
+        }
+
+        if(!endTime.matches(timeDateFilter)) {
+            alerter.alert("End time field must be in the format of: \n M(M)/d(d)/yyyy h(h):mm am|pm");
+            return;
+        }
+
         async.searchAppointmentBook(ownerName, beginTime, endTime, new AsyncCallback<AppointmentBook>() {
 
             @Override
             public void onSuccess(AppointmentBook appointmentBook) {
-                displaySearchedAppointments(appointmentBook);
+                prettyPrintApptBook(appointmentBook);
             }
 
             @Override
@@ -95,11 +134,18 @@ public class AppointmentBookGwt implements EntryPoint {
         AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
         String ownerName = this.viewAppointmentsOwnerNameBox.getText();
 
+        // Validate the fields
+
+        if(ownerName == null || ownerName.length() < 1) {
+            alerter.alert("Owner name field cannot be empty.");
+            return;
+        }
+
         async.viewAppointmentBook(ownerName, new AsyncCallback<AppointmentBook>() {
 
             @Override
             public void onSuccess(AppointmentBook appointmentBook) {
-                displayAllAppointments(appointmentBook);
+                prettyPrintApptBook(appointmentBook);
             }
 
             @Override
@@ -120,49 +166,6 @@ public class AppointmentBookGwt implements EntryPoint {
 
         resultHTML.setHTML(sb.toString());
     }
-
-    private void displaySearchedAppointments(AppointmentBook appointmentBook) {
-
-        StringBuilder sb = new StringBuilder(appointmentBook.toString());
-        sb.append("<BR>");
-
-        Collection<Appointment> appointments = appointmentBook.getAppointments();
-        for (Appointment appt : appointments) {
-            sb.append(appt);
-            sb.append("<BR>");
-        }
-
-        resultHTML.setHTML(sb.toString());
-    }
-
-    private void displayAllAppointments(AppointmentBook appointmentBook) {
-
-        StringBuilder sb = new StringBuilder(appointmentBook.toString());
-        sb.append("<BR>");
-
-        Collection<Appointment> appointments = appointmentBook.getAppointments();
-        for (Appointment appt : appointments) {
-            sb.append(appt);
-            sb.append("<BR>");
-        }
-
-        resultHTML.setHTML(sb.toString());
-    }
-
-
-
-
-  private void displayInAlertDialog(AppointmentBook airline) {
-    StringBuilder sb = new StringBuilder(airline.toString());
-    sb.append("\n");
-
-    Collection<Appointment> flights = airline.getAppointments();
-    for (Appointment flight : flights) {
-      sb.append(flight);
-      sb.append("\n");
-    }
-    alerter.alert(sb.toString());
-  }
 
   private void alert(Throwable ex) {
     alerter.alert(ex.toString());
@@ -291,14 +294,44 @@ public class AppointmentBookGwt implements EntryPoint {
         alerter.alert(readme);
     }
 
+    public void prettyPrintApptBook(AppointmentBook apptBook) {
+
+        long msDuration;
+        float minsDuration;
+        StringBuilder sb = new StringBuilder();
+        Collection<Appointment> appointments = apptBook.getAppointments();
+
+        if(apptBook.getAppointments().size() == 0) {
+            sb.append("No appointments found for " + apptBook.getOwnerName());
+            resultHTML.setHTML(sb.toString());
+            return;
+        }
+
+        sb.append("Appointments found for " + apptBook.getOwnerName() + "<BR><BR>");
+
+        // print each appointment.
+        for(Appointment appt: appointments) {
+
+            msDuration = appt.getEndTime().getTime() - appt.getBeginTime().getTime();
+            minsDuration = msDuration / 60000;
+
+            sb.append("Description: " + appt.getDescription() + "<BR>");
+            sb.append("Duration: " + minsDuration + " minutes.<BR>");
+            sb.append("Begin Time: " + appt.getBeginTimeString() + "<BR>");
+            sb.append("End Time: " + appt.getEndTimeString() + "<BR><BR>");
+        }
+
+        resultHTML.setHTML(sb.toString());
+    }
+
+
   @Override
   public void onModuleLoad() {
     RootPanel rootPanel = RootPanel.get();
 
-      // Create a menu bar
+      // Build a menu bar
       MenuBar menuBar = new MenuBar();
       menuBar.setAutoOpen(true);
-      menuBar.setWidth("100px");
       menuBar.setAnimationEnabled(true);
 
       // Create help menu
@@ -328,7 +361,7 @@ public class AppointmentBookGwt implements EntryPoint {
       tabPanel.add(searchAllAppointmentsWidget(), searchAllAppoTabTitle);
       tabPanel.add(viewAllAppointmentsWidget(), viewAllApptTabTitle);
 
-      //select first tab
+      //select first tab on load.
       tabPanel.selectTab(0);
 
       rootPanel.add(menuBar);
