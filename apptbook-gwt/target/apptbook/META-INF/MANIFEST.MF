@@ -3,10 +3,10 @@ Implementation-Title: Appointment Book GWT Application
 Implementation-Version: 1.0-SNAPSHOT
 Archiver-Version: Plexus Archiver
 Built-By: Paul
-Implementation-Vendor-Id: edu.pdx.cs410J.whitlock
-Built-On: 2016-08-09T22:07:12.379-0700
+Implementation-Vendor-Id: edu.pdx.cs410J.pbt
+Built-On: 2016-08-09T22:49:27.567-0700
 Implementation-Vendor: Portland State University
-Built-From-Revision: aa8bf00019c43c783121759d6d384587fb29c3f8
+Built-From-Revision: 42d60609470597d4930074ee3bb3f4a6b2a4c115
 Built-From-Branch: master
 Created-By: Apache Maven 3.3.9
 Build-Jdk: 1.8.0_40
