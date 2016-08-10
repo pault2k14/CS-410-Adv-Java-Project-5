@@ -8,19 +8,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+
+/**
+ * Te AppointmentBook class is an object that represents a real world appointment book
+ * and as such holds appointments. It provides functionality to perform the following tasks:
+ * Create a new appointment book, get the name of the owner of the appointment book,
+ * get a listing of appointments in the appointment book, and add an appointment to the
+ * appointment book.
+ */
 public class AppointmentBook extends AbstractAppointmentBook implements Serializable
 {
     private String owner;
     private ArrayList<Appointment> appointments;
 
+    /**
+     * Default constructor, instantiates the object without
+     * arguments.
+     */
     public AppointmentBook() {
 
     }
 
-        /**
-         * Instantiates a new AppointmentBook object.
-         * @param newOwner - The name of the owner of the newly created appointment book.
-         */
+    /**
+     * Instantiates a new AppointmentBook object.
+     * @param newOwner - The name of the owner of the newly created appointment book.
+     */
     public AppointmentBook(String newOwner) {
         this.owner = newOwner;
         this.appointments = new ArrayList<>();

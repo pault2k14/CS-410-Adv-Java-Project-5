@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="cs410J">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/cs410J.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/examples.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/hamcrest-core-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/servlet-api-2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

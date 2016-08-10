@@ -1,0 +1,32 @@
+<component name="libraryTable">
+  <library name="gwt-api-checker">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-api-checker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-codeserver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-dev.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-elemental.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-servlet-deps.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-servlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-user.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-apt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-client+src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-client.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-server+src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-server.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/validation-api-1.0.0.GA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-codeserver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-dev.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-elemental.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/gwt-user.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-apt-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-client+src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-client-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-server+src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/requestfactory-server-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/apptbook-gwt/src/gwt-2.8.0-rc1/validation-api-1.0.0.GA-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

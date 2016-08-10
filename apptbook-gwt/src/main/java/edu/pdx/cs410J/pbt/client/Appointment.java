@@ -8,6 +8,12 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
+
+/**
+ * Appointment class allows for the creation of new appointments, comparison of appointments,
+ * getting of formatted strings for beginTime and endTime, and the getting of the
+ * beginTime, endTime, and description of an appointment object.
+ */
 public class Appointment extends AbstractAppointment implements Comparable<Appointment>, Serializable
 {
 
@@ -15,18 +21,22 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     private Date endTime;
     private String description;
 
+    /**
+     * Default constructor, instantiates the object without
+     * arguments.
+     */
     public Appointment() {
 
     }
 
-        /**
-         * This constructor instantiates an appointment object.
-         * @param newDescription - The description for the appointment as a string.
-         * @param newBeginTime - The starting time for the appointment as a string
-         *                     in the format of M(M)/d(d)/yyyy HH:mm
-         * @param newEndTime - The ending time for the appointment as a string
-         *                   in the format of M(M)/d(d)/yyyy HH:mm
-         */
+    /**
+     * This constructor instantiates an appointment object.
+     * @param newDescription - The description for the appointment as a string.
+     * @param newBeginTime - The starting time for the appointment as a string
+     *                     in the format of M(M)/d(d)/yyyy HH:mm
+     * @param newEndTime - The ending time for the appointment as a string
+     *                   in the format of M(M)/d(d)/yyyy HH:mm
+     */
     public Appointment(String newDescription, String newBeginTime, String newEndTime) {
 
         // Attempt to parse the begin date and time to ensure that they
@@ -49,11 +59,6 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
 
         this.description = newDescription;
 
-    }
-
-    private String formatDate(Date date) {
-        String pattern = "yyyy/MM/dd hh:mm a";
-        return DateTimeFormat.getFormat(pattern).format(date);
     }
 
     /**

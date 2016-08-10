@@ -12,49 +12,62 @@ import com.google.gwt.user.client.ui.*;
 import java.util.Collection;
 
 /**
- * A basic GWT class that makes sure that we can send an appointment book back from the server
+ * Project 5 GWT class, allows user to use a client
+ * to create a new appointment book, a new appointment,
+ * search for appointments in an appointment book, and view all appointments in
+ * an appointment book.
  */
 public class AppointmentBookGwt implements EntryPoint {
-  private final Alerter alerter;
 
-    String timeDateFilter = "\\d\\d?/\\d\\d?/\\d\\d\\d\\d \\d\\d?:\\d\\d (am|pm)";
-    HTML resultHTML = null;
-    TextBox textBox = null;
-    TextBox createAppointmentOwnerNameBox = null;
-    TextBox createAppointmentBeginTimeBox = null;
-    TextBox createAppointmentEndTimeBox = null;
-    TextArea createAppointmentDescriptionArea = null;
-    TextBox viewAppointmentsOwnerNameBox = null;
-    TextBox searchAppointmentsOwnerNameBox = null;
-    TextBox searchAppointmentsBeginTimeBox = null;
-    TextBox searchAppointmentsEndTimeBox = null;
+    private final Alerter alerter;
+    private String timeDateFilter = "\\d\\d?/\\d\\d?/\\d\\d\\d\\d \\d\\d?:\\d\\d (am|pm)";
+    private HTML resultHTML = null;
+    private TextBox textBox = null;
+    private TextBox createAppointmentOwnerNameBox = null;
+    private TextBox createAppointmentBeginTimeBox = null;
+    private TextBox createAppointmentEndTimeBox = null;
+    private TextArea createAppointmentDescriptionArea = null;
+    private TextBox viewAppointmentsOwnerNameBox = null;
+    private TextBox searchAppointmentsOwnerNameBox = null;
+    private TextBox searchAppointmentsBeginTimeBox = null;
+    private TextBox searchAppointmentsEndTimeBox = null;
 
-
-  public AppointmentBookGwt() {
-    this(new Alerter() {
-      @Override
-      public void alert(String message) {
+    /**
+     * Public Constructor for class, sets up window alert for use
+     * in the session.
+     */
+    public AppointmentBookGwt() {
+        this(new Alerter() {
+            @Override
+            public void alert(String message) {
         Window.alert(message);
       }
-    });
-  }
+        });
+    }
 
-  AppointmentBookGwt(Alerter alerter) {
-    this.alerter = alerter;
+    /**
+     * PrivateConstructor for class, sets up window alert for use
+     * in the session.
+     */
+    private AppointmentBookGwt(Alerter alerter) {
+        this.alerter = alerter;
+    }
 
-
-  }
-
+    /**
+     * Creates and sends a request to the server to
+     * create a new appointment.
+     */
     private void createAppointments() {
 
         AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+
+        // Grab the values from our user input objects.
         String ownerName = this.createAppointmentOwnerNameBox.getText();
         String description = this.createAppointmentDescriptionArea.getText();
         String beginTime = this.createAppointmentBeginTimeBox.getText();
         String endTime = this.createAppointmentEndTimeBox.getText();
 
         // Validate the fields
-
         if(ownerName == null || ownerName.length() < 1) {
             alerter.alert("Owner name field cannot be empty.");
             return;
@@ -75,6 +88,7 @@ public class AppointmentBookGwt implements EntryPoint {
             return;
         }
 
+        // Send our asyncronous request.
         async.createAppointmentBook(ownerName, description, beginTime, endTime, new AsyncCallback<Appointment>() {
 
           @Override
@@ -89,15 +103,21 @@ public class AppointmentBookGwt implements EntryPoint {
       });
     }
 
+    /**
+     * Creates nnd sends a request to the server to
+     * search for appointments between a specific
+     * date range in an appointment book.
+     */
     private void searchAllAppointments() {
 
         AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+
+        // Grab the values of our user input.
         String ownerName = this.searchAppointmentsOwnerNameBox.getText();
         String beginTime = this.searchAppointmentsBeginTimeBox.getText();
         String endTime = this.searchAppointmentsEndTimeBox.getText();
 
         // Validate the fields
-
         if(ownerName == null || ownerName.length() < 1) {
             alerter.alert("Owner name field cannot be empty.");
             return;
@@ -113,6 +133,7 @@ public class AppointmentBookGwt implements EntryPoint {
             return;
         }
 
+        // Send our asyncronous request.
         async.searchAppointmentBook(ownerName, beginTime, endTime, new AsyncCallback<AppointmentBook>() {
 
             @Override
@@ -127,18 +148,22 @@ public class AppointmentBookGwt implements EntryPoint {
         });
     }
 
+    /**
+     * Creates nnd sends a request to the server to
+     * view all appointments between in an appointment book.
+     */
     private void viewAllAppointments() {
 
         AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
         String ownerName = this.viewAppointmentsOwnerNameBox.getText();
 
         // Validate the fields
-
         if(ownerName == null || ownerName.length() < 1) {
             alerter.alert("Owner name field cannot be empty.");
             return;
         }
 
+        // Send our asyncronous request.
         async.viewAppointmentBook(ownerName, new AsyncCallback<AppointmentBook>() {
 
             @Override
@@ -153,8 +178,15 @@ public class AppointmentBookGwt implements EntryPoint {
         });
     }
 
+    /**
+     * Modifies UI elements and displays the appointment
+     * that was created to the user.
+     * @param appointment - THe newly created appointment that
+     *                    will be displayed.
+     */
     private void displayCreatedAppointment(Appointment appointment) {
 
+        // Print the appointment.
         StringBuilder sb = new StringBuilder();
         sb.append("Appointment created!" + "<BR>");
         sb.append("Owner: " + this.createAppointmentOwnerNameBox.getText() + "<BR>");
@@ -165,12 +197,24 @@ public class AppointmentBookGwt implements EntryPoint {
         resultHTML.setHTML(sb.toString());
     }
 
-  private void alert(Throwable ex) {
+    /**
+     * Displays exceptions to the user in a alert window.
+     * @param ex - Exception to be shown to the user.
+     */
+    private void alert(Throwable ex) {
     alerter.alert(ex.toString());
   }
 
-    public VerticalPanel createAppointmentWidget() {
+    /**
+     * Builds the UI elements that allow a user to
+     * create a new appointment.
+     * @return verticalPanel - A vertical panel that
+     *                         contains the appointment  creation
+     *                         UI elements.
+     */
+    private VerticalPanel createAppointmentWidget() {
 
+        // Create the submit button and it's click event.
         Button createApptSubmitButton = new Button("Submit");
         createApptSubmitButton.addClickHandler(new ClickHandler() {
             @Override
@@ -179,6 +223,7 @@ public class AppointmentBookGwt implements EntryPoint {
             }
         });
 
+        // create the rest of the UI elements.
         this.createAppointmentOwnerNameBox = new TextBox();
         this.createAppointmentDescriptionArea = new TextArea();
         this.createAppointmentBeginTimeBox = new TextBox();
@@ -203,6 +248,8 @@ public class AppointmentBookGwt implements EntryPoint {
         horizontalPanelEndTime.add(endTimeLabel);
         horizontalPanelEndTime.add(this.createAppointmentEndTimeBox);
 
+        // Add all of the UI elements to the vertical panel
+        // that wil lbe returned.
         verticalPanel.add(horizontalPanelOwner);
         verticalPanel.add(horizontalPanelDescription);
         verticalPanel.add(horizontalPanelBeginTime);
@@ -212,8 +259,16 @@ public class AppointmentBookGwt implements EntryPoint {
         return verticalPanel;
     }
 
-    public VerticalPanel searchAllAppointmentsWidget() {
+    /**
+     * Builds the UI elements that allow a user to
+     * search for appointments.
+     * @return verticalPanel - A vertical panel that
+     *                         contains the appointment search
+     *                         UI elements.
+     */
+    private VerticalPanel searchAllAppointmentsWidget() {
 
+        // Create the submit button and it's click event.
         Button createApptSubmitButton = new Button("Submit");
         createApptSubmitButton.addClickHandler(new ClickHandler() {
             @Override
@@ -222,6 +277,7 @@ public class AppointmentBookGwt implements EntryPoint {
             }
         });
 
+        // create the rest of the UI elements.
         this.searchAppointmentsOwnerNameBox = new TextBox();
         this.searchAppointmentsBeginTimeBox = new TextBox();
         this.searchAppointmentsEndTimeBox = new TextBox();
@@ -241,6 +297,8 @@ public class AppointmentBookGwt implements EntryPoint {
         horizontalPanelEndTime.add(endTimeLabel);
         horizontalPanelEndTime.add(this.searchAppointmentsEndTimeBox);
 
+        // Add all of the UI elements to the vertical panel
+        // that wil lbe returned.
         verticalPanel.add(horizontalPanelOwner);
         verticalPanel.add(horizontalPanelBeginTime);
         verticalPanel.add(horizontalPanelEndTime);
@@ -249,8 +307,16 @@ public class AppointmentBookGwt implements EntryPoint {
         return verticalPanel;
     }
 
+    /**
+     * Builds the UI elements that allow a user to
+     * view all appointments.
+     * @return verticalPanel - A vertical panel that
+     *                         contains the appointment view
+     *                         all elements.
+     */
     private VerticalPanel viewAllAppointmentsWidget() {
 
+        // Create the submit button and it's click event.
         Button viewApptSubmitButton = new Button("Submit");
         viewApptSubmitButton.addClickHandler(new ClickHandler() {
             @Override
@@ -259,6 +325,7 @@ public class AppointmentBookGwt implements EntryPoint {
             }
         });
 
+        // create the rest of the UI elements.
         this.viewAppointmentsOwnerNameBox = new TextBox();
         Label ownerLabel = new Label("Owner name");
         VerticalPanel verticalPanel = new VerticalPanel();
@@ -266,14 +333,18 @@ public class AppointmentBookGwt implements EntryPoint {
         horizontalPanelOwner.add(ownerLabel);
         horizontalPanelOwner.add(this.viewAppointmentsOwnerNameBox);
 
-
+        // Add all of the UI elements to the vertical panel
+        // that wil lbe returned.
         verticalPanel.add(horizontalPanelOwner);
         verticalPanel.add(viewApptSubmitButton);
 
         return verticalPanel;
     }
 
-    public void showREADME() {
+    /**
+     * Displays a README to the user in a alert dialog box.
+     */
+    private void showREADME() {
 
         String readme = "This application allows the user to perform the following tasks: " + '\n'
                       + "Create a new appointment book, by creating a new appoinntment" + '\n'
@@ -288,17 +359,24 @@ public class AppointmentBookGwt implements EntryPoint {
                       + "End Time  - the ending time of the appointment," + '\n'
                       + "must be in the format of M(M)/d(d)/yyyy h(h):mm am|pm";
 
-
         alerter.alert(readme);
     }
 
-    public void prettyPrintApptBook(AppointmentBook apptBook) {
+    /**
+     * Pretty prints an appointment book, showing the name
+     * of the owner and the description, duration in minutes,
+     * begin time, and end time of each appointment.
+     * @param apptBook - The appointment book that will be pretty
+     *                 printed.
+     */
+    private void prettyPrintApptBook(AppointmentBook apptBook) {
 
         long msDuration;
         float minsDuration;
         StringBuilder sb = new StringBuilder();
         Collection<Appointment> appointments = apptBook.getAppointments();
 
+        // If there are no appointments, announcme that fact.
         if(apptBook.getAppointments().size() == 0) {
             sb.append("No appointments found for " + apptBook.getOwnerName());
             resultHTML.setHTML(sb.toString());
@@ -322,52 +400,55 @@ public class AppointmentBookGwt implements EntryPoint {
         resultHTML.setHTML(sb.toString());
     }
 
+    /**
+     * Sets up the UI on the initial loading of the
+     * web page.
+     */
+    @Override
+    public void onModuleLoad() {
+        RootPanel rootPanel = RootPanel.get();
 
-  @Override
-  public void onModuleLoad() {
-    RootPanel rootPanel = RootPanel.get();
+        // Build a menu bar
+        MenuBar menuBar = new MenuBar();
+        menuBar.setAutoOpen(true);
+        menuBar.setAnimationEnabled(true);
 
-      // Build a menu bar
-      MenuBar menuBar = new MenuBar();
-      menuBar.setAutoOpen(true);
-      menuBar.setAnimationEnabled(true);
+        // Create help menu
+        MenuBar helpMenu = new MenuBar(true);
+        helpMenu.setAnimationEnabled(true);
 
-      // Create help menu
-      MenuBar helpMenu = new MenuBar(true);
-      helpMenu.setAnimationEnabled(true);
-
-      helpMenu.addItem("README", new Command() {
-          @Override
-          public void execute() {
+        helpMenu.addItem("README", new Command() {
+            @Override
+            public void execute() {
               showREADME();
           }
-      });
+        });
 
-      menuBar.addItem(new MenuItem("Help", helpMenu));
+        menuBar.addItem(new MenuItem("Help", helpMenu));
 
-      TabPanel tabPanel = new TabPanel();
-      HTML headerSeperatorHTML = new HTML("<BR>");
-      HTML resultHeaderHTML = new HTML("<BR><h3>Latest Result<h3>");
-      resultHTML = new HTML("n/a");
+        TabPanel tabPanel = new TabPanel();
+        HTML headerSeperatorHTML = new HTML("<BR>");
+        HTML resultHeaderHTML = new HTML("<BR><h3>Latest Result<h3>");
+        resultHTML = new HTML("n/a");
 
-      String createApptTabTitle = "Create Appointment";
-      String viewAllApptTabTitle = "View All Appointments";
-      String searchAllAppoTabTitle = "Search Appointments";
+        String createApptTabTitle = "Create Appointment";
+        String viewAllApptTabTitle = "View All Appointments";
+        String searchAllAppoTabTitle = "Search Appointments";
 
-      //create tabs
-      tabPanel.add(createAppointmentWidget(), createApptTabTitle);
-      tabPanel.add(searchAllAppointmentsWidget(), searchAllAppoTabTitle);
-      tabPanel.add(viewAllAppointmentsWidget(), viewAllApptTabTitle);
+        // create tabs
+        tabPanel.add(createAppointmentWidget(), createApptTabTitle);
+        tabPanel.add(searchAllAppointmentsWidget(), searchAllAppoTabTitle);
+        tabPanel.add(viewAllAppointmentsWidget(), viewAllApptTabTitle);
 
-      //select first tab on load.
-      tabPanel.selectTab(0);
+        // select first tab on load.
+        tabPanel.selectTab(0);
 
-      rootPanel.add(menuBar);
-      rootPanel.add(headerSeperatorHTML);
-      rootPanel.add(tabPanel);
-      rootPanel.add(resultHeaderHTML);
-      rootPanel.add(resultHTML);
-
+        // Add all UI elements to the root panel.
+        rootPanel.add(menuBar);
+        rootPanel.add(headerSeperatorHTML);
+        rootPanel.add(tabPanel);
+        rootPanel.add(resultHeaderHTML);
+        rootPanel.add(resultHTML);
   }
 
   interface Alerter {
